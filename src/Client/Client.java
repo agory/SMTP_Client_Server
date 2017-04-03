@@ -48,7 +48,7 @@ public class Client {
         this.write("EHLO " + domainName);
         Response response = this.read();
         if(response.getCode() == 250) {
-            this.state = state.Authentification;
+            this.state = ClientState.Authentification;
         }
     }
 
@@ -72,10 +72,14 @@ public class Client {
         this.write("RCPT TO:<" + dest + ">");
     }
 
-    public void data(String content) throws NotAllowedMethodException {
+    public void data(String content) throws NotAllowedMethodException, RequestFailedException {
         if (!state.equals(ClientState.MailTarget))
             throw new NotAllowedMethodException("rset can be used only on MailTarget state");
         this.write("DATA");
+        Response response = this.read();
+        if(response.getCode() == 250) {
+            this.state = ClientState.MailData;
+        }
     }
 
     public void quit() throws NotAllowedMethodException {
