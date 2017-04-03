@@ -49,27 +49,42 @@ public class Client {
     public void rset() throws NotAllowedMethodException {
         if(!(state.equals(ClientState.Authentification) || state.equals(ClientState.MailTarget)))
             throw new NotAllowedMethodException("rset can be used only on authenfication or MailTarget state");
+        this.write("RSET");
+        try {
+            String response = this.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void mail(String from) throws NotAllowedMethodException {
         if(!state.equals(ClientState.Authentification))
             throw new NotAllowedMethodException("rset can be used only on Authentification state");
+        this.write("MAIL FROM:<"+from+">");
     }
 
 
     public void rcpt(String dest) throws NotAllowedMethodException {
         if(!state.equals(ClientState.MailTarget))
             throw new NotAllowedMethodException("rset can be used only on MailTarget state");
+        this.write("RCPT TO:<"+dest+">");
     }
 
     public void data(String content) throws NotAllowedMethodException {
         if(!state.equals(ClientState.MailTarget))
             throw new NotAllowedMethodException("rset can be used only on MailTarget state");
+        this.write("DATA");
+        try {
+            String response = this.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void quit() throws NotAllowedMethodException {
         if(!(state.equals(ClientState.MailData) || state.equals(ClientState.Connected)))
             throw new NotAllowedMethodException("rset can be used only on MailData or Connected state");
+        this.write("QUIT");
     }
 
 
