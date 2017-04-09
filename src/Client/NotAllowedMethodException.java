@@ -3,7 +3,7 @@ package Client;
 /**
  * Created by gorya on 03/04/2017.
  */
-public class NotAllowedMethodException extends Exception {
+public class NotAllowedMethodException extends SMTPException {
     public NotAllowedMethodException() {
     }
 

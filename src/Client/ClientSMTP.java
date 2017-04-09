@@ -11,26 +11,16 @@ import java.net.UnknownHostException;
 /**
  * Created by gorya on 03/04/2017.
  */
-public class Client {
+public class ClientSMTP implements Runnable {
 
     private Socket socket;
     private InetAddress ip;
     private int port;
     private ClientState state;
 
-    public Client(InetAddress ip, int port) {
+    public ClientSMTP(InetAddress ip, int port) {
         this.port = port;
         this.ip = ip;
-    }
-
-    public static void main(String[] arg) {
-        try {
-            InetAddress ip = InetAddress.getByName("127.0.0.1");
-            Client client = new Client(ip, 25);
-            client.run();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
     }
 
     public void run() {
@@ -43,7 +33,7 @@ public class Client {
 
     public void ehlo(String domainName) throws NotAllowedMethodException, RequestFailedException {
         if (!state.equals(ClientState.Connected))
-            throw new NotAllowedMethodException("rset can be used only on connected state");
+            throw new NotAllowedMethodException("ehlo can be used only on connected state");
 
         this.write("EHLO " + domainName);
         Response response = this.read();
@@ -52,29 +42,42 @@ public class Client {
         }
     }
 
-    public void rset() throws NotAllowedMethodException {
+    public void rset() throws NotAllowedMethodException, RequestFailedException  {
         if (!(state.equals(ClientState.Authentification) || state.equals(ClientState.MailTarget)))
             throw new NotAllowedMethodException("rset can be used only on authenfication or MailTarget state");
         this.write("RSET");
+        Response response = this.read();
+        if(response.getCode() == 250) {
+            this.state = ClientState.Authentification;
+        }
 
     }
 
-    public void mail(String from) throws NotAllowedMethodException {
+    public void mail(String from) throws NotAllowedMethodException, RequestFailedException, UnknowException  {
         if (!state.equals(ClientState.Authentification))
-            throw new NotAllowedMethodException("rset can be used only on Authentification state");
+            throw new NotAllowedMethodException("mail can be used only on Authentification state");
         this.write("MAIL FROM:<" + from + ">");
+        Response response = this.read();
+        if(response.getCode() == 250) {
+            this.state = ClientState.MailTarget;
+        } else {
+            throw new UnknowException("No existing email");
+        }
     }
 
 
-    public void rcpt(String dest) throws NotAllowedMethodException {
+    public void rcpt(String dest) throws NotAllowedMethodException, RequestFailedException  {
         if (!state.equals(ClientState.MailTarget))
-            throw new NotAllowedMethodException("rset can be used only on MailTarget state");
+            throw new NotAllowedMethodException("rcpt can be used only on MailTarget state");
         this.write("RCPT TO:<" + dest + ">");
+        Response response = this.read();
+        if(response.getCode() == 250) {
+        }
     }
 
     public void data(String content) throws NotAllowedMethodException, RequestFailedException {
         if (!state.equals(ClientState.MailTarget))
-            throw new NotAllowedMethodException("rset can be used only on MailTarget state");
+            throw new NotAllowedMethodException("data can be used only on MailTarget state");
         this.write("DATA");
         Response response = this.read();
         if(response.getCode() == 250) {
@@ -82,10 +85,19 @@ public class Client {
         }
     }
 
-    public void quit() throws NotAllowedMethodException {
+    public void quit() throws NotAllowedMethodException, RequestFailedException {
         if (!(state.equals(ClientState.MailData) || state.equals(ClientState.Connected)))
-            throw new NotAllowedMethodException("rset can be used only on MailData or Connected state");
+            throw new NotAllowedMethodException("quit can be used only on MailData or Connected state");
         this.write("QUIT");
+        Response response = this.read();
+        if(response.getCode() == 250) {
+            this.state = ClientState.Authentification;
+        }
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

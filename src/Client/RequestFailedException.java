@@ -3,7 +3,7 @@ package Client;
 /**
  * Created by gorya on 03/04/2017.
  */
-public class RequestFailedException extends Exception {
+public class RequestFailedException extends SMTPException {
     public RequestFailedException() {
     }
 
