@@ -1,8 +1,6 @@
-package Model.Method;
+package model.method;
 
-import Model.Connexion;
-
-import java.util.Arrays;
+import model.Connexion;
 
 /**
  *

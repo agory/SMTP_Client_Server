@@ -1,6 +1,6 @@
-package Model.Method;
+package model.method;
 
-import Model.Connexion;
+import model.Connexion;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

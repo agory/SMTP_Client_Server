@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.Console;
-import Model.Server;
+import model.Console;
+import model.Server;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

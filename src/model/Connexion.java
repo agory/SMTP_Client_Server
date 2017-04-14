@@ -1,11 +1,9 @@
-package Model;
+package model;
 
-import Model.Method.*;
+import model.method.*;
 
 import java.io.*;
-import java.lang.management.ManagementFactory;
 import java.net.Socket;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

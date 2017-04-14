@@ -8,7 +8,7 @@ public class MainServer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/View/server.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/server.fxml"));
         primaryStage.setTitle("Server POP3");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

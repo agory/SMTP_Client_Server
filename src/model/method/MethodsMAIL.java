@@ -1,6 +1,6 @@
-package Model.Method;
+package model.method;
 
-import Model.Connexion;
+import model.Connexion;
 
 /**
  *

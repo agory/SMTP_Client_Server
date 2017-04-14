@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;

@@ -1,6 +1,6 @@
-package Model.Method;
+package model.method;
 
-import Model.Connexion;
+import model.Connexion;
 
 /**
  * Created by jeremy on 03/04/2017.
