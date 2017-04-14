@@ -1,0 +1,29 @@
+{
+  "users":
+    [
+      {
+        "username" : "jeremy.com",
+        "file" : "user1.json"
+      },
+      {
+        "username" : "melanie@polytech.com",
+        "file" : "user2.json"
+      },
+      {
+        "username": "serena@polytech.com",
+        "file": "user3.json"
+      },
+      {
+        "username" : "vanessa@polytech.com",
+        "file" : "user3.json"
+      },
+      {
+        "username" : "dan@polytech.com",
+        "file" : "user4.json"
+      },
+      {
+        "username" : "chuck@polytech.com",
+        "file" : "user5.json"
+      }
+    ]
+}
