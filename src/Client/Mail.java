@@ -11,7 +11,6 @@ import java.util.Map;
  */
 public class Mail {
 
-    private String raw;
     private Date date;
     private String content;
     private Map<String, String> headers;
@@ -29,7 +28,7 @@ public class Mail {
     }
 
     public int size() {
-        return this.raw.getBytes().length;
+        return this.toString().getBytes().length;
     }
 
     public String getFrom() {
@@ -52,44 +51,44 @@ public class Mail {
         return this.getHeader("Message-ID");
     }
 
-    public void setFrom(String from) {
+    public Mail setFrom(String from) {
         this.headers.put("From", from);
+        return this;
     }
 
-    public void setTo(String to) {
+    public Mail setTo(String to) {
         this.addHeader("To", to);
+        return this;
     }
 
-    public void setSubject(String subject) {
+    public Mail setSubject(String subject) {
         this.addHeader("Subject", subject);
+        return this;
     }
 
-    public void setId(String id) {
+    public Mail setId(String id) {
         this.addHeader("Message-ID", id);
+        return this;
     }
 
-    public void setDate(Date date) {
+    public Mail setDate(Date date) {
         this.date = date;
+        return this;
     }
 
-    public void setContent(String content) {
+    public Mail setContent(String content) {
         this.content = content;
+        return this;
     }
 
     public String getHeader(String key) {
         return this.headers.get(key);
     }
 
-    public void addHeader(String key, String value) {
+    public Mail addHeader(String key, String value) {
         this.headers.put(key, value);
-    }
+        return this;
 
-    public String getRaw() {
-        return raw;
-    }
-
-    public void setRaw(String raw) {
-        this.raw = raw;
     }
 
     @Override

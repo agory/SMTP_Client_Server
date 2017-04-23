@@ -37,52 +37,57 @@ public class ClientSMTP implements Runnable {
 
         this.write("EHLO " + domainName);
         Response response = this.read();
-        if(response.getCode() == 250) {
+        if (response.getCode() == 250)
             this.state = ClientState.Authentification;
-        }
+        else
+            throw new RequestFailedException();
     }
 
-    public void rset() throws NotAllowedMethodException, RequestFailedException  {
+    public void rset() throws NotAllowedMethodException, RequestFailedException {
         if (!(state.equals(ClientState.Authentification) || state.equals(ClientState.MailTarget)))
             throw new NotAllowedMethodException("rset can be used only on authenfication or MailTarget state");
         this.write("RSET");
         Response response = this.read();
-        if(response.getCode() == 250) {
+        if (response.getCode() == 250)
             this.state = ClientState.Authentification;
-        }
+        else
+            throw new RequestFailedException();
 
     }
 
-    public void mail(String from) throws NotAllowedMethodException, RequestFailedException, UnknowException  {
+    public void mail(String from) throws NotAllowedMethodException, RequestFailedException, UnknowException {
         if (!state.equals(ClientState.Authentification))
             throw new NotAllowedMethodException("mail can be used only on Authentification state");
         this.write("MAIL FROM:<" + from + ">");
         Response response = this.read();
-        if(response.getCode() == 250) {
+        if (response.getCode() == 250)
             this.state = ClientState.MailTarget;
-        } else {
+        else
             throw new UnknowException("No existing email");
-        }
+
     }
 
 
-    public void rcpt(String dest) throws NotAllowedMethodException, RequestFailedException  {
+    public void rcpt(String dest) throws NotAllowedMethodException, RequestFailedException {
         if (!state.equals(ClientState.MailTarget))
             throw new NotAllowedMethodException("rcpt can be used only on MailTarget state");
         this.write("RCPT TO:<" + dest + ">");
         Response response = this.read();
-        if(response.getCode() == 250) {
-        }
+        if (response.getCode() != 250)
+            throw new RequestFailedException();
+
     }
 
     public void data(String content) throws NotAllowedMethodException, RequestFailedException {
         if (!state.equals(ClientState.MailTarget))
             throw new NotAllowedMethodException("data can be used only on MailTarget state");
-        this.write("DATA");
+        this.write("DATA \r\n " + content);
         Response response = this.read();
-        if(response.getCode() == 250) {
+        if (response.getCode() == 250)
             this.state = ClientState.MailData;
-        }
+        else
+            throw new RequestFailedException();
+
     }
 
     public void quit() throws NotAllowedMethodException, RequestFailedException {
@@ -90,7 +95,7 @@ public class ClientSMTP implements Runnable {
             throw new NotAllowedMethodException("quit can be used only on MailData or Connected state");
         this.write("QUIT");
         Response response = this.read();
-        if(response.getCode() == 250) {
+        if (response.getCode() == 250) {
             this.state = ClientState.Authentification;
         }
         try {
