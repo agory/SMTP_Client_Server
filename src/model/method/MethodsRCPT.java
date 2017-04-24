@@ -46,7 +46,7 @@ public class MethodsRCPT extends Methods {
         JSONParser parser = new JSONParser();
         try {
 
-            Object obj = parser.parse(new FileReader("ressources\\users.json"));
+            Object obj = parser.parse(new FileReader("resources\\users.json"));
             JSONObject jsonObject = (JSONObject) obj;
 
             JSONArray users = (JSONArray) jsonObject.get("users");
@@ -81,7 +81,7 @@ public class MethodsRCPT extends Methods {
         JSONParser parser = new JSONParser();
         try {
 
-            Object obj = parser.parse(new FileReader("ressources\\users\\" + server.getUserfile()));
+            Object obj = parser.parse(new FileReader("resources\\users\\" + server.getUserfile()));
             JSONObject jsonObject = (JSONObject) obj;
             nbrMsg = Integer.parseInt(String.valueOf(jsonObject.get("number_messages")));
 
