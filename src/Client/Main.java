@@ -13,7 +13,7 @@ public class Main {
         List<Mail> mails = new ArrayList<>();
         mails.add(new Mail()
                 .setFrom("toto@toto.fr")
-                .setTo("toto2@toto.fr")
+                .setTo("polytech@polytech.fr")
                 .setSubject("toto")
                 .setDate(new Date())
                 .setContent("tagada tada gadadada")

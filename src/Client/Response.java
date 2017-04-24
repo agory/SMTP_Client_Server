@@ -8,15 +8,10 @@ public class Response {
     private String message;
 
     public Response (String raw) {
-        StringBuilder stringBuilder = new StringBuilder();
-        raw.trim().chars().forEach(c -> {
-            stringBuilder.append(c);
-            if(c == ' ' && code == 0) {
-                this.code = Integer.valueOf(stringBuilder.toString());
-                stringBuilder.setLength(0);
-            }
-        });
-        this.message = stringBuilder.toString();
+        String[] params = raw.split(" ");
+        code =Integer.valueOf(params[0]);
+        message = raw;
+
     }
 
     public int getCode() {

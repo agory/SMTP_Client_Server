@@ -1,6 +1,7 @@
 package Client;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -19,27 +20,47 @@ public class MailSender {
     }
 
     public void send(List<Mail> mails) {
+        InetAddress ip = null;
         try {
-            InetAddress ip = InetAddress.getByName(Config.SMTPHost);;
-            ClientSMTP clientSMTP = new ClientSMTP(ip, Config.port);
+            ip = InetAddress.getByName(Config.SMTPHost);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        ClientSMTP clientSMTP = new ClientSMTP(ip, Config.port);
+
+        try {
             clientSMTP.run();
             clientSMTP.ehlo(Config.domain);
             mails.forEach(mail -> {
+                System.out.println("send mail : " + mail.getFrom() + " => " + mail.getTo());
                 try {
-                    clientSMTP.rcpt(mail.getTo());
                     clientSMTP.mail(mail.getFrom());
-                    clientSMTP.mail(mail.toString());
-                } catch (Exception e) {
+                    clientSMTP.rcpt(mail.getTo());
+                    clientSMTP.data(mail.toString());
+                    clientSMTP.rset();
+                } catch (UnknowException e) {
+                    System.out.println("Unknown destination : " + mail.getTo());
                     try {
                         clientSMTP.rset();
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
+
+                } catch (SMTPException e) {
                     e.printStackTrace();
                 }
             });
+            clientSMTP.quit();
         } catch (Exception e) {
             e.printStackTrace();
+            try {
+                clientSMTP.quit();
+            } catch (NotAllowedMethodException e1) {
+                e1.printStackTrace();
+            } catch (RequestFailedException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 

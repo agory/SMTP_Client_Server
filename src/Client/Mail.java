@@ -94,12 +94,13 @@ public class Mail {
     @Override
     public String toString() {
         String mail = "";
-        for (Map.Entry<String, String> entry : this.headers.entrySet()) {
+        /*for (Map.Entry<String, String> entry : this.headers.entrySet()) {
             mail += entry.getKey() + ": " + entry.getValue() + "\r\n";
-        }
+        }*/
         DateFormat format = new SimpleDateFormat("EEE, d MMM YYYY HH:mm:ss Z");
 
-        mail += "Date: " + format.format(this.date) + "\r\n";
+        mail += format.format(this.date) + "\r\n";
+        mail += this.getSubject() + "\r\n";
         mail += "\r\n";
         String content = this.getContent();
         for (int i = 0; i < content.length(); i += 79)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientController">
+   <children>
+      <VBox layoutX="126.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+         <children>
+            <TextField fx:id="tf_from">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50.0" right="50.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="tf_to">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50" right="50" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="tf_subject">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50" right="50" />
+               </VBox.margin>
+            </TextField>
+            <TextArea fx:id="ta_content" prefHeight="200.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50" right="50" />
+               </VBox.margin>
+            </TextArea>
+            <Button mnemonicParsing="false" onMouseClicked="#send" text="Button" />
+         </children></VBox>
+   </children>
+</AnchorPane>
