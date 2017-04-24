@@ -1,0 +1,39 @@
+{
+  "messages":[
+    {
+      "from": "polytech@lyon1.fr",
+      "to": "insa@lyon1.fr",
+      "subject": "24h",
+      "date": "10/10/10",
+      "marked": false,
+      "message-id": 1,
+      "content": "Bonjour, nous vous contactons au sujet des 24H de l'insa qui se derouleront le 17/12/10 "
+    },
+    {
+      "from": "polytech@lyon1.fr",
+      "to": "insa@lyon1.fr",
+      "subject": "PNW",
+      "date": "15/11/11",
+      "marked": false,
+      "message-id": 2,
+      "content": "Bonjour, suite à notre échange téléphonique, nous sommes heureux de vous anno"
+    },
+    {
+      "from": "polytech@lyon1.fr",
+      "to": "insa@lyon1.fr",
+      "subject": "Tigresses",
+      "date": "20/11/12",
+      "marked": false,
+      "message-id": 3,
+      "content": "Bonjour, nous sommes à la recherche de membre de staff pour nous aider à organiser"
+    },
+    {
+      "from": "polytech@lyon1.fr",
+      "to": "insa@lyon1.fr",
+      "subject": "WEC",
+      "date": "09/09/09",
+      "marked": false,
+      "message-id": 4,
+      "content": "Bonjurno"
+    }
+  ],"number_messages":4}
