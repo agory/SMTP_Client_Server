@@ -1,4 +1,11 @@
-package Client;
+package client;
+
+import client.exception.NotAllowedMethodException;
+import client.exception.RequestFailedException;
+import client.exception.SMTPException;
+import client.exception.UnknowException;
+import client.model.ClientSMTP;
+import client.model.Mail;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

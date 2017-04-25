@@ -1,9 +1,12 @@
-package Client;
+package client.model;
+
+import client.exception.NotAllowedMethodException;
+import client.exception.RequestFailedException;
+import client.exception.UnknowException;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Objects;
 
 /**

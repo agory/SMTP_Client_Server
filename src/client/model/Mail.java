@@ -1,4 +1,4 @@
-package Client;
+package client.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +17,7 @@ public class Mail {
 
     public Mail() {
         this.headers = new HashMap<>();
+        this.date = new Date();
     }
 
     public Mail(String content) {

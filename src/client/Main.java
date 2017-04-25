@@ -1,4 +1,6 @@
-package Client;
+package client;
+
+import client.model.Mail;
 
 import java.util.ArrayList;
 import java.util.Date;
