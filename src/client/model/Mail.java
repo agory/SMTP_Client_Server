@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +15,7 @@ public class Mail {
     private Date date;
     private String content;
     private Map<String, String> headers;
+    private List<String> toList;
 
     public Mail() {
         this.headers = new HashMap<>();
@@ -36,8 +38,8 @@ public class Mail {
         return this.getHeader("From");
     }
 
-    public String getTo() {
-        return this.getHeader("To");
+    public List<String> getTo() {
+        return this.toList;
     }
 
     public String getSubject() {
@@ -57,8 +59,8 @@ public class Mail {
         return this;
     }
 
-    public Mail setTo(String to) {
-        this.addHeader("To", to);
+    public Mail addTo(String to) {
+        this.toList.add(to);
         return this;
     }
 

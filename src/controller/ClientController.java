@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,10 +27,12 @@ public class ClientController {
 
     public void send(MouseEvent mouseEvent) {
         Mail mail = new Mail();
-        mail.setFrom(this.tf_from.getText());
-        mail.setTo(this.tf_to.getText());
-        mail.setSubject(this.tf_subject.getText());
-        mail.setContent(this.ta_content.getText());
+        mail.setFrom(this.tf_from.getText().trim());
+        for (String to : this.tf_to.getText().split(";")) {
+            mail.addTo(to.trim());
+        }
+        mail.setSubject(this.tf_subject.getText().trim());
+        mail.setContent(this.ta_content.getText().trim());
         List<Mail> mails = new ArrayList<>();
         mails.add(mail);
         System.out.println(mail);

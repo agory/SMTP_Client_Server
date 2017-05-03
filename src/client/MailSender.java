@@ -39,11 +39,13 @@ public class MailSender {
         try {
             clientSMTP.run();
             clientSMTP.ehlo(Config.domain);
-            mails.forEach(mail -> {
+            for (Mail mail : mails) {
                 System.out.println("send mail : " + mail.getFrom() + " => " + mail.getTo());
                 try {
                     clientSMTP.mail(mail.getFrom());
-                    clientSMTP.rcpt(mail.getTo());
+                    for (String to : mail.getTo()) {
+                        clientSMTP.rcpt(to);
+                    }
                     clientSMTP.data(mail.toString());
                     clientSMTP.rset();
                 } catch (UnknowException e) {
@@ -57,7 +59,7 @@ public class MailSender {
                 } catch (SMTPException e) {
                     e.printStackTrace();
                 }
-            });
+            }
             clientSMTP.quit();
         } catch (Exception e) {
             e.printStackTrace();
