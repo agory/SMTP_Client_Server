@@ -2,10 +2,7 @@ package client.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by gorya on 3/12/17.
@@ -19,6 +16,7 @@ public class Mail {
 
     public Mail() {
         this.headers = new HashMap<>();
+        this.toList = new ArrayList<>();
         this.date = new Date();
     }
 

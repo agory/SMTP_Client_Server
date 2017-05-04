@@ -40,35 +40,28 @@ public class MailSender {
             clientSMTP.run();
             clientSMTP.ehlo(Config.domain);
             for (Mail mail : mails) {
-                System.out.println("send mail : " + mail.getFrom() + " => " + mail.getTo());
+                System.out.println("Start to send mail : " + mail.getFrom() + " => " + mail.getTo());
                 try {
                     clientSMTP.mail(mail.getFrom());
                     for (String to : mail.getTo()) {
                         clientSMTP.rcpt(to);
                     }
                     clientSMTP.data(mail.toString());
-                    clientSMTP.rset();
                 } catch (UnknowException e) {
                     System.out.println("Unknown destination : " + mail.getTo());
-                    try {
-                        clientSMTP.rset();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-
                 } catch (SMTPException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getClass()+" : "+e.getMessage());
+                } finally {
+                    clientSMTP.rset();
                 }
             }
             clientSMTP.quit();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getClass()+" : "+e.getMessage());
             try {
                 clientSMTP.quit();
-            } catch (NotAllowedMethodException e1) {
-                e1.printStackTrace();
-            } catch (RequestFailedException e1) {
-                e1.printStackTrace();
+            } catch (Exception e1) {
+                System.out.println(e1.getClass()+" : "+e1.getMessage());
             }
         }
     }
