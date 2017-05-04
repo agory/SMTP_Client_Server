@@ -31,7 +31,7 @@
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
             </TextField>
-            <Label text="TO (mail;second mail)">
+            <Label text="To (mail;second mail)">
                <VBox.margin>
                   <Insets bottom="5.0" left="50.0" right="50.0" />
                </VBox.margin>
