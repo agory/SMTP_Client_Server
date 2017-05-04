@@ -25,6 +25,6 @@ public class MethodsMAIL extends Methods {
 
     @Override
     String[] extractContent(String content) {
-        return new String[]{content.split("\\s+")[1]};
+        return new String[]{content.split("\\s+")[2]};
     }
 }

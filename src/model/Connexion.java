@@ -34,8 +34,8 @@ public class Connexion implements Runnable {
     private void setMethodsList(){
         methodsList.add(new MethodsHELO(this,"HELO"));
         methodsList.add(new MethodsHELO(this,"EHLO"));
-        methodsList.add(new MethodsMAIL(this,"MAIL"));
-        methodsList.add(new MethodsRCPT(this,"RCPT"));
+        methodsList.add(new MethodsMAIL(this,"MAIL FROM"));
+        methodsList.add(new MethodsRCPT(this,"RCPT TO"));
         methodsList.add(new MethodsDATA(this,"DATA"));
         methodsList.add(new MethodsREST(this,"RSET"));
         methodsList.add(new MethodsQUIT(this,"QUIT"));
@@ -129,6 +129,9 @@ public class Connexion implements Runnable {
     private void answerCommand(String data){
         String command = data.split("\\s+")[0];
         command = command.toUpperCase();
+
+        if(Objects.equals(command, "MAIL") || Objects.equals(command, "RCPT"))
+            command += " " + data.split("\\s+")[1];
 
         String content = "";
         for (String s : data.split("\\s+"))
