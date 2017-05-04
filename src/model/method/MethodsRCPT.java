@@ -24,7 +24,7 @@ public class MethodsRCPT extends Methods {
 
     @Override
     String makeAnswer(String content) {
-        if (server.isState(server.STATE_MAILTARGET))
+        if (server.isState(server.STATE_MAILTARGET) ||server.isState(server.STATE_MAILDATA) )
         {
             String[] user = extractContent(content);
             if(checkRcpt(user))
