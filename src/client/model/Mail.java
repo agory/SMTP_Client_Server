@@ -100,8 +100,8 @@ public class Mail {
         }*/
         DateFormat format = new SimpleDateFormat("EEE, d MMM YYYY HH:mm:ss Z");
 
-        mail += format.format(this.date) + "\r\n";
         mail += this.getSubject() + "\r\n";
+        mail += format.format(this.date) + "\r\n";
         mail += "\r\n";
         String content = this.getContent();
         for (int i = 0; i < content.length(); i += 79)

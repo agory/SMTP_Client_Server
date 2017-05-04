@@ -31,9 +31,15 @@ public class ClientSMTP implements Runnable {
             this.socket = new Socket(this.ip, port);
             System.out.println("Start tcp connexion : " + this.ip.getHostAddress() + " : " + this.port);
             this.state = ClientState.Connected;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void ready() throws NotAllowedMethodException, RequestFailedException{
+        Response response = this.read();
+        if (response.getCode() != 220)
+            throw new RequestFailedException();
     }
 
     public void ehlo(String domainName) throws NotAllowedMethodException, RequestFailedException {
@@ -42,7 +48,7 @@ public class ClientSMTP implements Runnable {
 
         this.write("EHLO " + domainName);
         Response response = this.read();
-        if (response.getCode() == 220)
+        if (response.getCode() == 250)
             this.state = ClientState.Authentification;
         else
             throw new RequestFailedException();
@@ -63,7 +69,7 @@ public class ClientSMTP implements Runnable {
     public void mail(String from) throws NotAllowedMethodException, RequestFailedException, UnknowException {
         if (!state.equals(ClientState.Authentification))
             throw new NotAllowedMethodException("mail can be used only on Authentification state");
-        this.write("MAIL " + from);
+        this.write("MAIL FROM "  + from);
         Response response = this.read();
         if (response.getCode() == 250)
             this.state = ClientState.MailTarget;
@@ -76,7 +82,7 @@ public class ClientSMTP implements Runnable {
     public void rcpt(String dest) throws NotAllowedMethodException, RequestFailedException, UnknowException {
         if (!state.equals(ClientState.MailTarget))
             throw new NotAllowedMethodException("rcpt can be used only on MailTarget state");
-        this.write("RCPT " + dest);
+        this.write("RCPT TO " + dest);
         Response response = this.read();
         if (response.getCode() == 550)
             throw new UnknowException("No existing email");

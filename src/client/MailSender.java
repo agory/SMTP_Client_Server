@@ -38,6 +38,7 @@ public class MailSender {
 
         try {
             clientSMTP.run();
+            clientSMTP.ready();
             clientSMTP.ehlo(Config.domain);
             for (Mail mail : mails) {
                 System.out.println("Start to send mail : " + mail.getFrom() + " => " + mail.getTo());
