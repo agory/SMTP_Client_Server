@@ -20,6 +20,6 @@ public class Main {
                 .setDate(new Date())
                 .setContent("tagada tada gadadada")
         );
-        mailSender.send(mails);
+        ///mailSender.send(mails);
     }
 }

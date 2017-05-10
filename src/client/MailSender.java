@@ -9,6 +9,7 @@ import client.model.Mail;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class MailSender {
         return instance;
     }
 
-    public void send(List<Mail> mails) {
+    public void send(List<Mail> mails) throws UnknowException, NotAllowedMethodException, RequestFailedException {
         InetAddress ip = null;
         try {
             ip = InetAddress.getByName(Config.SMTPHost);
@@ -35,6 +36,9 @@ public class MailSender {
         }
 
         ClientSMTP clientSMTP = new ClientSMTP(ip, Config.port);
+        List<String> unkownMail = new ArrayList<>();
+        int messageSend = 0;
+        int messageTotal = 0;
 
         try {
             clientSMTP.run();
@@ -42,28 +46,39 @@ public class MailSender {
             clientSMTP.ehlo(Config.domain);
             for (Mail mail : mails) {
                 System.out.println("Start to send mail : " + mail.getFrom() + " => " + mail.getTo());
-                try {
-                    clientSMTP.mail(mail.getFrom());
-                    for (String to : mail.getTo()) {
+                clientSMTP.mail(mail.getFrom());
+                int i = 0;
+                for (String to : mail.getTo()) {
+                    messageTotal++;
+                    try {
                         clientSMTP.rcpt(to);
+                        i++;
+                    } catch (UnknowException e) {
+                        unkownMail.add(to);
                     }
-                    clientSMTP.data(mail.toString());
-                } catch (UnknowException e) {
-                    System.out.println("Unknown destination : " + mail.getTo());
-                } catch (SMTPException e) {
-                    System.out.println(e.getClass()+" : "+e.getMessage());
-                } finally {
-                    clientSMTP.rset();
                 }
+                messageSend+= i;
+                if(i> 0)
+                    clientSMTP.data(mail.toString());
+                clientSMTP.rset();
             }
             clientSMTP.quit();
-        } catch (Exception e) {
-            System.out.println(e.getClass()+" : "+e.getMessage());
+            if(unkownMail.size() > 0) {
+                StringBuilder builder = new StringBuilder();
+                unkownMail.forEach(mail -> builder.append(mail + ","));
+                throw new UnknowException(messageSend + " / " + messageTotal + " message send \n unknown User " + builder.toString());
+            }
+        }  catch (UnknowException e) {
+           throw e;
+        } catch (SMTPException e) {
+            System.out.println(e.getClass() + " : " + e.getMessage());
             try {
+                clientSMTP.rset();
                 clientSMTP.quit();
             } catch (Exception e1) {
-                System.out.println(e1.getClass()+" : "+e1.getMessage());
+                System.out.println(e1.getClass() + " : " + e1.getMessage());
             }
+            throw e;
         }
     }
 

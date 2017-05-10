@@ -13,7 +13,7 @@
    <children>
       <VBox layoutX="126.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
          <children>
-            <Label text="Envoyer une message">
+            <Label text="Envoyer un message">
                <VBox.margin>
                   <Insets left="200" right="50.0" top="20.0" />
                </VBox.margin>
@@ -61,7 +61,7 @@
                   <Insets bottom="20.0" left="50" right="50" />
                </VBox.margin>
             </TextArea>
-            <Button mnemonicParsing="false" onMouseClicked="#send" text="Button">
+            <Button mnemonicParsing="false" onMouseClicked="#send" text="Send">
                <VBox.margin>
                   <Insets bottom="20.0" left="50" right="50" />
                </VBox.margin>

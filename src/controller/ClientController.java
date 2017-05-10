@@ -1,8 +1,11 @@
 package controller;
 
 import client.MailSender;
+import client.exception.SMTPException;
+import client.exception.UnknowException;
 import client.model.Mail;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -38,6 +41,30 @@ public class ClientController {
         System.out.println(mail);
 
         MailSender mailSender = MailSender.getInstance();
-        mailSender.send(mails);
+        try {
+            mailSender.send(mails);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Message send");
+
+            alert.showAndWait();
+        } catch (UnknowException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Unknown User");
+            alert.setHeaderText(e.getMessage());
+
+            alert.showAndWait();
+        } catch (SMTPException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Request failed");
+            alert.setHeaderText(e.getMessage());
+
+            alert.showAndWait();
+        }
+
+        tf_subject.setText("");
+        tf_to.setText("");
+        tf_from.setText("");
+        ta_content.setText("");
     }
 }

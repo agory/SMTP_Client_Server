@@ -85,7 +85,7 @@ public class ClientSMTP implements Runnable {
         this.write("RCPT TO " + dest);
         Response response = this.read();
         if (response.getCode() == 550)
-            throw new UnknowException("No existing email");
+            throw new UnknowException("No existing email : " + dest);
         else if (response.getCode() != 250)
             throw new RequestFailedException();
 
